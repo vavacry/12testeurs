@@ -1,0 +1,444 @@
+@import "tailwindcss";
+
+/* ============================================================
+   12TESTEURS — design tokens
+   Direction : « Console de test » (poster suisse industriel × interface système rétro)
+   Un seul accent (bleu électrique). Vert et rouge = états système uniquement.
+   ============================================================ */
+
+@theme {
+  --color-ink: #0b0b0c;
+  --color-ink-2: #121214;
+  --color-ink-3: #1b1b1f;
+  --color-line: #2a2a30;
+  --color-line-2: #3d3d45;
+  --color-paper: #edece6;
+  --color-mute: #a3a2a9;
+  --color-dim: #85848c;
+  --color-blue: #3a3aff;
+  --color-blue-deep: #2b2bd9;
+  --color-blue-text: #9090ff;
+  --color-on-blue-mute: #dedeff;
+  --color-ok: #4af626;
+  --color-alert: #ff453a;
+
+  --ease-snap: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@theme inline {
+  --font-sans: var(--font-archivo), system-ui, sans-serif;
+  --font-display: var(--font-archivo-display), "Arial Narrow", Impact, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+
+@property --n {
+  syntax: "<integer>";
+  initial-value: 0;
+  inherits: false;
+}
+
+/* ------------------------------------------------------------ base */
+
+@layer base {
+  html {
+    background: var(--color-ink);
+    color-scheme: dark;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    background: var(--color-ink);
+    color: var(--color-paper);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Grain analogique global, statique (aucun coût d'animation). */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    pointer-events: none;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  ::selection {
+    background: var(--color-blue);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-paper);
+    outline-offset: 3px;
+  }
+
+  [id] {
+    scroll-margin-top: 4.5rem;
+  }
+
+  summary {
+    list-style: none;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------ composants */
+
+@layer components {
+  .frame {
+    position: relative;
+    width: 100%;
+    max-width: 1280px;
+    margin-inline: auto;
+    border-inline: 1px solid var(--color-line);
+  }
+
+  .display {
+    font-family: var(--font-display);
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 0.88;
+    letter-spacing: -0.012em;
+  }
+
+  .label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.35;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* Bouton principal : bloc bleu + ombre dure décalée (fenêtre rétro). */
+  .btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.875rem;
+    min-height: 3.5rem;
+    padding: 0 1.5rem;
+    background: var(--color-blue);
+    color: #fff;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.875rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    box-shadow: 5px 5px 0 0 var(--color-paper);
+    transition:
+      transform 0.18s var(--ease-snap),
+      box-shadow 0.18s var(--ease-snap);
+  }
+
+  .btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 7px 7px 0 0 var(--color-paper);
+  }
+
+  .btn:active {
+    transform: translate(5px, 5px);
+    box-shadow: 0 0 0 0 var(--color-paper);
+    transition-duration: 0.06s;
+  }
+
+  @media (max-width: 479px) {
+    .btn {
+      padding: 0 1rem;
+      gap: 0.625rem;
+      font-size: 0.8125rem;
+    }
+  }
+
+  @media (max-width: 359px) {
+    .btn {
+      font-size: 0.75rem;
+      letter-spacing: 0.02em;
+    }
+  }
+
+  .btn-arrow {
+    transition: transform 0.25s var(--ease-snap);
+  }
+
+  .btn:hover .btn-arrow {
+    transform: translateX(4px);
+  }
+
+  .btn-sm {
+    min-height: 2.5rem;
+    padding: 0 1rem;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    box-shadow: 3px 3px 0 0 var(--color-paper);
+  }
+
+  .btn-sm:hover {
+    box-shadow: 4px 4px 0 0 var(--color-paper);
+  }
+
+  .btn-sm:active {
+    box-shadow: 0 0 0 0 var(--color-paper);
+  }
+
+  /* Fenêtre système rétro */
+  .win {
+    border: 1px solid var(--color-line-2);
+    background: var(--color-ink-2);
+  }
+
+  .win-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid var(--color-line-2);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .win-lines {
+    flex: 1;
+    height: 9px;
+    background: repeating-linear-gradient(0deg, var(--color-line-2) 0 1px, transparent 1px 3px);
+  }
+
+  .blueprint {
+    background-image:
+      linear-gradient(color-mix(in srgb, var(--color-line) 60%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in srgb, var(--color-line) 60%, transparent) 1px, transparent 1px);
+    background-size: 56px 56px;
+    background-position: -1px -1px;
+  }
+
+  /* Repère de coupe « + » aux intersections de la grille */
+  .cross {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    pointer-events: none;
+  }
+
+  .cross::before,
+  .cross::after {
+    content: "";
+    position: absolute;
+    background: var(--color-paper);
+  }
+
+  .cross::before {
+    left: 7px;
+    width: 1px;
+    height: 15px;
+  }
+
+  .cross::after {
+    top: 7px;
+    width: 15px;
+    height: 1px;
+  }
+
+  .outline-num {
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--color-line-2);
+  }
+
+  /* Emplacement à remplir : {{PLACEHOLDER}} bien visible */
+  .slot {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    color: var(--color-blue-text);
+    background: rgb(58 58 255 / 0.12);
+    outline: 1px dashed var(--color-blue-text);
+    outline-offset: 1px;
+    padding: 0 0.3em;
+    overflow-wrap: anywhere;
+  }
+
+  .sticky-cta {
+    transform: translateY(110%);
+    transition: transform 0.35s var(--ease-snap);
+  }
+
+  .sticky-cta[data-show="true"] {
+    transform: none;
+  }
+
+  .faq-plus {
+    transition: transform 0.3s var(--ease-snap);
+  }
+
+  .faq-item[open] .faq-plus {
+    transform: rotate(45deg);
+  }
+
+  .faq-item[open] > summary {
+    color: #fff;
+  }
+
+  /* Compteurs @property : la valeur finale s'affiche sans animation. */
+  .count {
+    counter-reset: n var(--n);
+  }
+
+  .count::after {
+    content: counter(n, decimal-leading-zero);
+  }
+
+  /* Schéma « un testeur abandonne » — état FINAL par défaut */
+  .cs-dot {
+    aspect-ratio: 1;
+    border: 1px solid var(--color-blue);
+    background: var(--color-blue);
+  }
+
+  .cs-dot[data-margin] {
+    border-style: dashed;
+    border-color: var(--color-blue-text);
+    background: rgb(58 58 255 / 0.25);
+  }
+
+  .cs-dot[data-left] {
+    border-style: solid;
+    border-color: var(--color-line-2);
+    background: transparent;
+  }
+
+  .cs-day {
+    height: 0.75rem;
+    border: 1px solid var(--color-blue);
+    background: var(--color-blue);
+  }
+}
+
+/* ============================================================
+   MOTION — CSS uniquement, transform/opacity en priorité.
+   L'état de BASE est l'état FINAL : sans animation (reduced motion,
+   pas de JS), on voit directement le résultat.
+   ============================================================ */
+
+@keyframes grow {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+@keyframes unlit {
+  from,
+  to {
+    background-color: transparent;
+    border-color: var(--color-line-2);
+  }
+}
+
+@keyframes still-here {
+  from,
+  to {
+    border-style: dashed;
+    border-color: var(--color-blue-text);
+    background-color: rgb(58 58 255 / 0.25);
+  }
+}
+
+@keyframes hold-visible {
+  from,
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes hold-hidden {
+  from,
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes count-14 {
+  from {
+    --n: 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* --- Hero, au chargement --- */
+  .hero-sweep::before {
+    animation: grow 0.8s var(--ease-snap) 0.3s both;
+  }
+
+  .hero-in {
+    animation: fade-up 0.7s var(--ease-snap) var(--d, 0s) both;
+  }
+
+  /* --- Séquences déclenchées à l'entrée dans l'écran (PlayOnView) --- */
+  [data-anim="armed"] * {
+    animation-play-state: paused !important;
+  }
+
+  /* Schéma : 1 jour = 0,16 s, le testeur part au jour 9 (1,74 s). */
+  [data-anim] .cs-day {
+    animation: unlit calc(0.3s + var(--i) * 0.16s) linear;
+  }
+
+  [data-anim] .cs-dot[data-left] {
+    animation: still-here 1.74s linear;
+  }
+
+  [data-anim] .cs-days-count {
+    animation: count-14 2.24s steps(14, end) 0.3s both;
+  }
+
+  [data-anim] .cs-before {
+    animation: hold-visible 1.74s linear;
+  }
+
+  [data-anim] .cs-after {
+    animation: hold-hidden 1.74s linear;
+  }
+
+  [data-anim] .cs-done {
+    animation: fade-up 0.45s var(--ease-snap) 2.6s both;
+  }
+
+  /* FAQ : ouverture fluide (amélioration progressive) */
+  :root {
+    interpolate-size: allow-keywords;
+  }
+
+  .faq-item::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition:
+      block-size 0.35s var(--ease-snap),
+      content-visibility 0.35s allow-discrete;
+  }
+
+  .faq-item[open]::details-content {
+    block-size: auto;
+  }
+}
