@@ -1,91 +1,87 @@
 # Déploiement — 12testeurs
 
-## 1. Lancer en local
+Le site est **100 % statique** : il n'y a aucun serveur. Il est en ligne sur **GitHub Pages** :
+
+**https://vavacry.github.io/12testeurs/**
+
+Dépôt : https://github.com/vavacry/12testeurs
+
+## 1. Mettre à jour le site
+
+Chaque `git push` sur `main` reconstruit et republie le site en 1 à 2 minutes, via le workflow `.github/workflows/pages.yml`. Pour suivre une publication : onglet **Actions** du dépôt.
+
+```bash
+git add -A
+```
+
+```bash
+git commit -m "Mise à jour du site"
+```
+
+```bash
+git push
+```
+
+## 2. Lancer en local
 
 Prérequis : Node.js 20 ou plus récent.
 
 ```bash
-cd 12testeurs
 npm install
-cp .env.example .env.local   # puis remplis les valeurs
-npm run dev                  # http://localhost:3000
 ```
 
-En local, si `ORDER_WEBHOOK_URL` est vide, les commandes du formulaire `/commande` s'affichent dans le terminal. En production, ce champ vide déclenche une erreur visible.
+```bash
+npm run dev
+```
 
-Pour tester en conditions réelles : `npm run build && npm run start`.
+Le site s'ouvre sur http://localhost:3000. En local, `NEXT_PUBLIC_BASE_PATH` reste vide, donc le site est servi à la racine.
 
-## 2. Créer le lien de paiement Stripe
+## 3. Brancher le paiement Stripe
 
-Commence en **mode test** (interrupteur en haut du tableau de bord Stripe).
+Tant qu'aucun lien Stripe n'est configuré, les boutons « Lancer mon test fermé » ouvrent un **email de commande pré-rempli** vers vacryoff@gmail.com, et la page affiche « Commande par email ».
 
-1. **Catalogue de produits → Ajouter un produit** : « Test fermé Google Play · 14 testeurs », prix **39,00 €**, paiement unique.
-2. **Paramètres → Informations publiques** : renseigne l'URL des CGV `https://12testeurs.fr/cgv`.
-3. **Liens de paiement → Nouveau**, sur ce produit :
+1. Stripe, en **mode test** d'abord : **Catalogue de produits → Ajouter un produit** « Test fermé Google Play · 14 testeurs », **39,00 €**, paiement unique.
+2. **Paramètres → Informations publiques** : URL des CGV `https://vavacry.github.io/12testeurs/cgv`.
+3. **Liens de paiement → Nouveau** :
    - quantité fixe à 1 ;
-   - coche **« Exiger que les clients acceptent vos conditions d'utilisation »** ;
-   - active **la création de facture après paiement**. Dans le pied de facture, ajoute : « EI · SIRET … · TVA non applicable, art. 293 B du CGI » ;
-   - onglet **Après le paiement** → « Ne pas afficher de page de confirmation » → redirection vers :
-     `https://12testeurs.fr/commande?session_id={CHECKOUT_SESSION_ID}`
-4. Copie l'URL du lien (`https://buy.stripe.com/…`) dans `NEXT_PUBLIC_STRIPE_LINK`.
-5. **Paramètres → E-mails clients** : active l'envoi des reçus de paiement.
-6. Fais un achat de test avec la carte `4242 4242 4242 4242` (date future, n'importe quel CVC). Vérifie que tu arrives sur `/commande` et que la commande arrive bien sur ton webhook.
-7. Recrée le produit et le lien en **mode live**, puis remplace l'URL de test.
+   - **Exiger l'acceptation des conditions d'utilisation** ;
+   - **création de facture après paiement**, avec en pied de facture : « EI · SIRET 106 038 516 00014 · TVA non applicable, art. 293 B du CGI » ;
+   - onglet **Après le paiement** → redirection vers `https://vavacry.github.io/12testeurs/commande?session_id={CHECKOUT_SESSION_ID}`.
+4. Dans GitHub, **Settings → Secrets and variables → Actions → onglet Variables → New repository variable** :
+   - nom `STRIPE_LINK`, valeur `https://buy.stripe.com/…`
+5. **Actions → Publier sur GitHub Pages → Run workflow**, ou n'importe quel push. Les boutons pointent alors vers Stripe et la page affiche « Paiement sécurisé Stripe ».
+6. Teste avec la carte `4242 4242 4242 4242`, puis refais le produit et le lien en **mode live**.
 
-## 3. Recevoir les commandes (`ORDER_WEBHOOK_URL`)
+## 4. Réception des commandes
 
-Le formulaire envoie un POST JSON : `{ content, text, order: { name, email, appName, packageId, testLink, needHelp, expressStart, stripeSessionId, receivedAt } }`.
+Après le paiement, le formulaire `/commande` vérifie les champs et prépare un récapitulatif. Le client te l'envoie par email en un clic.
 
-Au choix :
-- **Make** : scénario « Webhooks → Custom webhook », puis Google Sheets et/ou email ;
-- **Zapier** : « Webhooks by Zapier → Catch Hook » ;
-- **n8n** : nœud « Webhook » ;
-- **Discord** : salon → Intégrations → Webhooks. Le champ `content` s'affiche tel quel ;
-- **Slack** : Incoming Webhook. Le champ `text` s'affiche tel quel.
+En option, tu peux recevoir aussi une copie automatique sur un webhook (Make, Zapier, n8n, Discord…). Ajoute dans `.github/workflows/pages.yml`, étape `npm run build` :
 
-## 4. Déployer sur Vercel
-
-1. Mets le dossier `12testeurs` dans un dépôt GitHub.
-2. Sur vercel.com : **Add New → Project → Import** le dépôt. Si le dépôt contient le dossier parent, règle **Root Directory = `12testeurs`**. Le framework Next.js est détecté tout seul.
-3. **Environment Variables** : `NEXT_PUBLIC_STRIPE_LINK`, `NEXT_PUBLIC_SITE_URL=https://12testeurs.fr`, `NEXT_PUBLIC_CONTACT_EMAIL`, `ORDER_WEBHOOK_URL`.
-4. **Deploy**.
-
-Les variables `NEXT_PUBLIC_*` sont intégrées au moment du build : après une modification, il faut redéployer.
-
-Alternative en ligne de commande :
-
-```bash
-npm i -g vercel
+```yaml
+          NEXT_PUBLIC_ORDER_WEBHOOK_URL: ${{ vars.ORDER_WEBHOOK_URL }}
 ```
 
-```bash
-vercel
-```
+Crée ensuite la variable `ORDER_WEBHOOK_URL` comme à l'étape 3. Cette URL est visible dans le code du site : utilise un webhook dédié à ces commandes.
 
-```bash
-vercel --prod
-```
+## 5. Nom de domaine (plus tard)
 
-## 5. Nom de domaine
-
-`12testeurs.fr` et `12testeurs.com` étaient disponibles le 28/10/2026. Achète-les chez Vercel ou chez un registrar (OVH, Gandi…).
-
-Ensuite, dans le projet Vercel : **Settings → Domains → Add** `12testeurs.fr`, puis `www.12testeurs.fr` en redirection. Recopie chez ton registrar les enregistrements DNS que Vercel affiche. Ajoute `12testeurs.com` en redirection vers le `.fr`.
+1. Achète `12testeurs.fr`, par exemple chez OVH ou Gandi. Vercel ne vend pas les `.fr`.
+2. GitHub : **Settings → Pages → Custom domain** → `12testeurs.fr`. Chez ton registrar, crée les enregistrements DNS indiqués par GitHub : 4 enregistrements A vers les IP de GitHub Pages, plus un CNAME `www`.
+3. Dans `.github/workflows/pages.yml`, mets `NEXT_PUBLIC_BASE_PATH: ""` et `NEXT_PUBLIC_SITE_URL: https://12testeurs.fr`, puis push.
+4. Mets à jour l'URL des CGV et la redirection Stripe avec le nouveau domaine.
 
 ## 6. Avant d'ouvrir les ventes
 
-- [ ] Tous les `{{…}}` remplis (voir `CONTENU.md`), y compris `{{ORIGINE_DES_TESTEURS}}`
-- [ ] Les 3 clauses `{{A_VALIDER}}` des CGV tranchées, et les textes légaux relus
-- [ ] Médiateur de la consommation désigné
-- [ ] Achat de test Stripe complet : paiement → `/commande` → webhook reçu
-- [ ] Google Search Console : domaine vérifié, sitemap `https://12testeurs.fr/sitemap.xml` envoyé
-- [ ] Test des résultats enrichis : https://search.google.com/test/rich-results
+- [ ] Médiateur de la consommation désigné : les emplacements `{{MEDIATEUR_NOM}}` / `{{MEDIATEUR_URL}}` sont dans `src/content/legal.ts`. C'est obligatoire avant de vendre à des particuliers.
+- [ ] Réponse à « D'où viennent les testeurs ? » dans `src/content/faq.ts` (`{{ORIGINE_DES_TESTEURS}}`). La question est masquée tant qu'elle est vide.
+- [ ] Textes légaux relus : ce sont des modèles rédigés par un agent IA, pas un avis juridique.
+- [ ] Lien Stripe branché et achat de test complet : paiement → `/commande` → email reçu.
+- [ ] Google Search Console : propriété ajoutée, sitemap `…/sitemap.xml` envoyé.
 
-## 7. Performance (mesurée en local, Lighthouse 12, version de production)
+## 7. Performance (Lighthouse 12, site en ligne, 30/10/2026)
 
 | | Performance | Accessibilité | Bonnes pratiques | SEO |
 |---|---|---|---|---|
-| Mobile | 96 | 100 | 100 | 100 |
+| Mobile | 98 | 100 | 100 | 100 |
 | Desktop | 100 | 100 | 100 | 100 |
-
-Les polices sont auto-hébergées. Elles ont été réduites au strict nécessaire (68 Ko au lieu de 128 Ko), voir `src/fonts/LICENCE.md`.

@@ -6,58 +6,25 @@ Tout ce qui est entre `{{…}}` est un **emplacement vide**. Sur le site, il app
 
 ---
 
-## 1. À remplir avant la mise en ligne
+## 1. Ce qu’il reste à remplir
 
-### Variables d'environnement (`.env.local` en local, réglages du projet sur Vercel)
+### Déjà rempli
+Nom (Mathieu Dunand), nom commercial (Vascent), email (vacryoff@gmail.com), SIRET, adresse, téléphone, délais de remboursement (14 jours, demande sous 30 jours), clauses des CGV. Les textes légaux restent un modèle rédigé par un agent IA : fais-les relire.
 
-| Variable | Exemple | Rôle |
+### Reste à remplir
+
+| Fichier | Emplacement | À mettre |
 |---|---|---|
-| `NEXT_PUBLIC_STRIPE_LINK` | `https://buy.stripe.com/xxxx` | Destination de tous les boutons de paiement |
-| `NEXT_PUBLIC_SITE_URL` | `https://12testeurs.fr` | Canonical, sitemap, Open Graph |
-| `NEXT_PUBLIC_CONTACT_EMAIL` | `contact@12testeurs.fr` | Remplace `{{EMAIL}}` : onglet Garantie, FAQ, pied de page, page de commande |
-| `ORDER_WEBHOOK_URL` | URL Make, Zapier, n8n, Discord… | Reçoit les commandes. **Obligatoire en production** |
+| `src/content/legal.ts` | `{{MEDIATEUR_NOM}}` / `{{MEDIATEUR_URL}}` | Médiateur de la consommation agréé (**obligatoire avant de vendre à des particuliers**) |
+| `src/content/faq.ts` | `{{ORIGINE_DES_TESTEURS}}` | 2 phrases vraies : qui sont les testeurs, comment tu les recrutes, s’ils sont rémunérés. La question est masquée tant que c’est vide. |
+| `src/content/proof.ts` | `{{NB_APPS_PUBLIÉES}}`, `{{TÉMOIGNAGE_1}}`… | Seulement quand c’est réel, puis `enabled: true` |
 
-### `src/lib/site.ts`
+### Variables GitHub (Settings → Secrets and variables → Actions → Variables)
 
-| Emplacement | À mettre |
+| Variable | Rôle |
 |---|---|
-| `owner: "{{NOM_PRENOM}}"` | Ton nom, affiché avant l'achat (onglet Garantie et pied de page) |
-| `refundDelay: "{{DELAI_REMBOURSEMENT}}"` | Ex. « 14 jours » (onglet Garantie, étape 3 du remboursement) |
-
-### `src/content/faq.ts`
-
-| Emplacement | À mettre |
-|---|---|
-| `{{ORIGINE_DES_TESTEURS}}` | Réponse à « D'où viennent les testeurs ? » : 2 phrases vraies (qui ils sont, comment tu les recrutes, s'ils sont rémunérés). C'est la première question d'un acheteur méfiant. Tant qu'elle est vide, elle reste hors des données structurées Google. |
-
-### Preuve sociale — `src/content/proof.ts` (désactivée)
-
-Passe `enabled: true` seulement quand c'est réel. La ligne chiffrée s'affiche alors sous le bouton du hero, et le témoignage dans l'onglet « Inclus ».
-
-| Emplacement | À mettre |
-|---|---|
-| `{{NB_APPS_PUBLIÉES}}` | Nombre réel d'apps passées en production avec toi |
-| `{{TÉMOIGNAGE_1}}`, `{{AUTEUR_1}}`, `{{APP_1}}` | Une citation réelle, avec l'accord du client |
-
-### Pages légales — `src/content/legal.ts`
-
-C'est un modèle rédigé par un agent IA, pas un avis juridique : fais-le relire avant la première vente.
-
-| Emplacement | À mettre |
-|---|---|
-| `{{NOM_PRENOM}}`, `{{ADRESSE}}`, `{{SIRET}}`, `{{TELEPHONE}}` | Ton identité d'entrepreneur individuel |
-| `{{IMMATRICULATION}}` | « RCS de [ville] n° … » ou mention RNE, ou supprimer la ligne |
-| `{{EMAIL}}` | Email de contact |
-| `{{TELEPHONE_HEBERGEUR}}` | Téléphone de Vercel, tiré d'un document officiel |
-| `{{MEDIATEUR_NOM}}` / `{{MEDIATEUR_URL}}` | Médiateur de la consommation agréé (**obligatoire avant de vendre à des particuliers**) |
-| `{{DELAI_DEMANDE_REMBOURSEMENT}}`, `{{DELAI_REMBOURSEMENT}}` | Ex. « 30 jours », « 14 jours » |
-| `{{OUTIL_RECEPTION_COMMANDES}}`, `{{LOCALISATION_OUTIL_RECEPTION_COMMANDES}}` | Outil qui reçoit le webhook et son pays |
-| `{{DATE_MISE_A_JOUR}}` | Date de chaque page |
-
-**Il reste trois clauses `{{A_VALIDER: …}}` à trancher**, toutes dans les CGV :
-1. Article 11 : le délai pour soumettre la demande d'accès production après la fin du test.
-2. Article 11 : l'exclusion du cas où Google suspend le compte ou l'app.
-3. Article 12 : la confidentialité des testeurs (il te faut une charte testeurs).
+| `STRIPE_LINK` | Lien Stripe Payment Link. Sans lui, les boutons ouvrent un email de commande pré-rempli |
+| `ORDER_WEBHOOK_URL` | Optionnel : copie des commandes vers un webhook (voir DEPLOIEMENT.md) |
 
 ---
 
@@ -81,7 +48,7 @@ Logo + bouton « Lancer mon test · 39 € » (desktop uniquement).
 ### Onglet 1 · Étapes (ouvert par défaut)
 - La règle : « si ton compte développeur personnel a été créé après le 13 novembre 2023, Google demande aujourd'hui 12 testeurs inscrits pendant 14 jours d'affilée avant la publication. Si tu tombes à 11, les 14 jours recommencent. »
 - **H2** : « Ce qui se passe après ta commande »
-  1. **Tu paies 39 €** sur Stripe, sans créer de compte.
+  1. **Tu commandes pour 39 €** en quelques minutes, sans créer de compte.
   2. **Tu nous envoies ton lien** de test fermé et l'ID de ton app. Pas encore de test fermé ? On le crée avec toi.
   3. **14 testeurs s'inscrivent sous 24 à 48 h** et ouvrent ton app pendant 14 jours. Tu vois le nombre d'inscrits chaque jour.
   4. **À la fin des 14 jours,** tu reçois le résumé QA et on t'aide à remplir la demande d'accès production.
@@ -109,9 +76,9 @@ Logo + bouton « Lancer mon test · 39 € » (desktop uniquement).
 - Les étapes du remboursement :
   1. Tu nous envoies l'email de refus de Google, ou une capture.
   2. On vérifie que le test a bien été mené jusqu'au bout avec nos testeurs.
-  3. On te rembourse les 39 € via Stripe, sur ta carte, sous `{{DELAI_REMBOURSEMENT}}`.
+  3. On te rembourse les 39 € sur ton moyen de paiement, sous 14 jours.
 - Lien : « Conditions complètes, cas exclus compris : article 11 des CGV »
-- Encadré « Qui est derrière » : « Service tenu par `{{NOM_PRENOM}}`, entrepreneur individuel en France. Une question avant de commander ? Écris à `{{EMAIL}}`. 12testeurs n'est ni affilié à Google ni approuvé par Google. »
+- Encadré « Qui est derrière » : « Service tenu par Mathieu Dunand, entrepreneur individuel en France. Une question avant de commander ? Écris à vacryoff@gmail.com. 12testeurs n'est ni affilié à Google ni approuvé par Google. »
 
 ### Onglet 4 · FAQ — `src/content/faq.ts`
 Ce fichier alimente aussi les données structurées pour Google.
@@ -125,7 +92,7 @@ Ce fichier alimente aussi les données structurées pour Google.
 8. Mes données et mon code sont-ils en sécurité ?
 9. Faut-il un compte organisation ?
 
-Sous la liste : « Pas de réponse ici ? Écris à `{{EMAIL}}`. »
+Sous la liste : « Pas de réponse ici ? Écris à vacryoff@gmail.com. »
 
 ### Bas de chaque onglet
 Le bouton, puis « Paiement Stripe · sans abonnement · remboursé si accès refusé ».
@@ -134,7 +101,7 @@ Le bouton, puis « Paiement Stripe · sans abonnement · remboursé si accès re
 « 14 testeurs · 39 € / Remboursé si accès refusé » + « Lancer mon test ». Il apparaît une fois le bouton du hero dépassé et se cache quand un bouton d'onglet est à l'écran.
 
 ### Pied de page
-« 14 testeurs Google Play pour ton test fermé de 14 jours, 39 €. Service tenu par `{{NOM_PRENOM}}`, EI · `{{EMAIL}}` », puis les liens Mentions légales, CGV et Confidentialité, et la mention : « Google Play est une marque de Google LLC. 12testeurs n'est ni affilié à Google ni approuvé par Google. »
+« 14 testeurs Google Play pour ton test fermé de 14 jours, 39 €. Service tenu par Mathieu Dunand, EI · vacryoff@gmail.com », puis les liens Mentions légales, CGV et Confidentialité, et la mention : « Google Play est une marque de Google LLC. 12testeurs n'est ni affilié à Google ni approuvé par Google. »
 
 ---
 
