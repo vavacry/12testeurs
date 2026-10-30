@@ -77,8 +77,6 @@ Crée ensuite la variable `ORDER_WEBHOOK_URL` comme à l'étape 3. Cette URL est
 
 ## 6. Avant d'ouvrir les ventes
 
-- [ ] Médiateur de la consommation désigné : les emplacements `{{MEDIATEUR_NOM}}` / `{{MEDIATEUR_URL}}` sont dans `src/content/legal.ts`. C'est obligatoire avant de vendre à des particuliers.
-- [ ] Réponse à « D'où viennent les testeurs ? » dans `src/content/faq.ts` (`{{ORIGINE_DES_TESTEURS}}`). La question est masquée tant qu'elle est vide.
 - [ ] Textes légaux relus : ce sont des modèles rédigés par un agent IA, pas un avis juridique.
 - [ ] Lien Stripe branché et achat de test complet : paiement → `/commande` → email reçu.
 - [ ] Google Search Console : propriété ajoutée, sitemap `…/sitemap.xml` envoyé.

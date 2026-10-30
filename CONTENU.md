@@ -15,8 +15,6 @@ Nom (Mathieu Dunand), nom commercial (Vascent), email (vacryoff@gmail.com), SIRE
 
 | Fichier | Emplacement | À mettre |
 |---|---|---|
-| `src/content/legal.ts` | `{{MEDIATEUR_NOM}}` / `{{MEDIATEUR_URL}}` | Médiateur de la consommation agréé (**obligatoire avant de vendre à des particuliers**) |
-| `src/content/faq.ts` | `{{ORIGINE_DES_TESTEURS}}` | 2 phrases vraies : qui sont les testeurs, comment tu les recrutes, s’ils sont rémunérés. La question est masquée tant que c’est vide. |
 | `src/content/proof.ts` | `{{NB_APPS_PUBLIÉES}}`, `{{TÉMOIGNAGE_1}}`… | Seulement quand c’est réel, puis `enabled: true` |
 
 ### Variables GitHub (Settings → Secrets and variables → Actions → Variables)
@@ -82,7 +80,6 @@ Logo + bouton « Lancer mon test · 39 € » (desktop uniquement).
 
 ### Onglet 4 · FAQ — `src/content/faq.ts`
 Ce fichier alimente aussi les données structurées pour Google.
-1. D'où viennent les testeurs ? → `{{ORIGINE_DES_TESTEURS}}`
 2. Que se passe-t-il si un testeur part ?
 3. Combien de temps ça prend au total ?
 4. Google demande 12 ou 20 testeurs ?

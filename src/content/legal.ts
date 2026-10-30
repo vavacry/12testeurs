@@ -493,23 +493,11 @@ export const cgv: LegalDoc = {
       ],
     },
     {
-      title: "Article 16 – Réclamations et médiation",
+      title: "Article 16 – Réclamations",
       blocks: [
         {
           type: "p",
           text: "Pour toute question ou réclamation, le Client contacte l’éditeur à vacryoff@gmail.com.",
-        },
-        {
-          type: "p",
-          text: "En cas de litige, le Client Consommateur peut recourir gratuitement au médiateur de la consommation suivant (article L612-1 du Code de la consommation) :",
-        },
-        {
-          type: "list",
-          items: ["{{MEDIATEUR_NOM}}", "Site : {{MEDIATEUR_URL}}"],
-        },
-        {
-          type: "p",
-          text: "Le médiateur peut être saisi après une réclamation écrite adressée à l’éditeur, dans un délai d’un an à compter de cette réclamation (article L612-2 du Code de la consommation).",
         },
       ],
     },

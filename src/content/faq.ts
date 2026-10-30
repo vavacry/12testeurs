@@ -5,7 +5,7 @@ export type FaqItem = { q: string; a: string };
 export const faq: FaqItem[] = [
   {
     q: "D’où viennent les testeurs ?",
-    a: "{{ORIGINE_DES_TESTEURS}}",
+    a: "Ce sont des testeurs dont c’est le métier : des professionnels de la QA, aux profils et aux appareils variés. Notre rôle est de te mettre en relation avec eux et de suivre ton test jusqu’au bout.",
   },
   {
     q: "Que se passe-t-il si un testeur part ?",
