@@ -634,7 +634,7 @@ export const confidentialite: LegalDoc = {
             "Stripe (Stripe Payments Europe, Limited, Irlande) : paiement en ligne. Stripe traite aussi certaines données pour son propre compte, notamment pour lutter contre la fraude et respecter ses obligations légales, selon sa politique de confidentialité (https://stripe.com/privacy).",
             "GitHub, Inc. (États-Unis), service GitHub Pages : hébergement du site.",
             "Google LLC, service Gmail (États-Unis) : messagerie de l’éditeur, réception et gestion des commandes. Les données du formulaire y sont transmises par email.",
-            "FormSubmit (formsubmit.co) : service qui transmet le formulaire de commande par email à l’éditeur.",
+            "Web3Forms (web3forms.com) ou FormSubmit (formsubmit.co) : services qui transmettent le formulaire de commande par email à l’éditeur.",
             "Le fournisseur de messagerie électronique de l’éditeur : échanges par email.",
             "Les testeurs : uniquement le nom de l’application et le lien de test fermé, nécessaires à la prestation. Ils installent l’application depuis le Play Store et n’ont jamais accès à votre code source ni à votre Play Console. Comme tout utilisateur du Play Store, ils voient les informations publiques de la fiche de l’application, dont le nom du développeur.",
             "Les autorités administratives ou judiciaires, uniquement lorsque la loi l’exige.",
@@ -651,7 +651,7 @@ export const confidentialite: LegalDoc = {
       blocks: [
         {
           type: "p",
-          text: "Certains destinataires sont établis ou traitent des données hors de l’Union européenne, notamment aux États-Unis : GitHub, Inc., Stripe pour certains traitements, FormSubmit et Google LLC (Gmail).",
+          text: "Certains destinataires sont établis ou traitent des données hors de l’Union européenne, notamment aux États-Unis : GitHub, Inc., Stripe pour certains traitements, Web3Forms ou FormSubmit, et Google LLC (Gmail).",
         },
         {
           type: "p",

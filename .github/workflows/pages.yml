@@ -32,6 +32,7 @@ jobs:
           NEXT_PUBLIC_SITE_URL: https://vavacry.github.io/12testeurs
           NEXT_PUBLIC_CONTACT_EMAIL: vacryoff@gmail.com
           NEXT_PUBLIC_STRIPE_LINK: ${{ vars.STRIPE_LINK }}
+          NEXT_PUBLIC_WEB3FORMS_KEY: ${{ vars.WEB3FORMS_KEY }}
       - run: touch out/.nojekyll
       - uses: actions/upload-pages-artifact@v4
         with:

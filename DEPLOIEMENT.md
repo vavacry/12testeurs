@@ -54,7 +54,11 @@ Tant qu'aucun lien Stripe n'est configuré, les boutons « Lancer mon test ferm�
 
 ## 4. Réception des commandes
 
-Après le paiement, le formulaire `/commande` vérifie les champs et prépare un récapitulatif. Le client te l'envoie par email en un clic.
+Le formulaire `/commande` vérifie les champs, puis t'envoie la commande par email, sans serveur :
+
+1. **Web3Forms**, si la variable `WEB3FORMS_KEY` est définie. C'est la voie recommandée. Pour l'obtenir, va sur https://web3forms.com, saisis vacryoff@gmail.com et reçois la clé par email. Ajoute-la ensuite dans GitHub : **Settings → Secrets and variables → Actions → Variables** → `WEB3FORMS_KEY`. Le plan gratuit couvre 250 envois par mois.
+2. Sinon **FormSubmit** (formsubmit.co), sans clé. Lors de la toute première commande, FormSubmit t'envoie un email d'activation sur lequel il faut cliquer.
+3. Si les deux échouent, le client voit le récapitulatif, avec un bouton « Copier » et un lien « Ouvrir ma messagerie ».
 
 En option, tu peux recevoir aussi une copie automatique sur un webhook (Make, Zapier, n8n, Discord…). Ajoute dans `.github/workflows/pages.yml`, étape `npm run build` :
 
