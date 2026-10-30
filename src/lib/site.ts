@@ -13,11 +13,8 @@ export const site = {
 } as const;
 
 // Lien Stripe Payment Link, injecté au build.
-// Tant qu'il n'est pas configuré, les boutons ouvrent un email de commande pré-rempli : la page vend quand même.
-const orderByEmail =
-  `mailto:${site.contactEmail}?subject=${encodeURIComponent("Commande 12testeurs · test fermé 39 €")}&body=${encodeURIComponent(
-    "Bonjour,\n\nJe veux lancer un test fermé avec 14 testeurs (39 €).\n\nNom de l’app :\nID du package (com.xxx.xxx) :\nLien du test fermé (si déjà créé) :\n\nMerci !",
-  )}`;
+// Tant qu'il n'est pas configuré, les boutons mènent au formulaire de commande du site :
+// la commande arrive par email et le lien de paiement est envoyé ensuite au client.
 export const hasStripe = Boolean(process.env.NEXT_PUBLIC_STRIPE_LINK);
-export const checkoutHref = process.env.NEXT_PUBLIC_STRIPE_LINK || orderByEmail;
-export const paymentNote = hasStripe ? "Paiement sécurisé Stripe" : "Commande par email";
+export const checkoutHref = process.env.NEXT_PUBLIC_STRIPE_LINK || `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/commande`;
+export const paymentNote = hasStripe ? "Paiement sécurisé Stripe" : "Paiement après validation";

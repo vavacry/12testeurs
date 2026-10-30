@@ -56,10 +56,10 @@ export const mentionsLegales: LegalDoc = {
         {
           type: "list",
           items: [
-            "Vercel Inc.",
-            "440 N Barranca Ave #4133, Covina, CA 91723, États-Unis",
-            "Contact : support@vercel.com",
-            "Site : https://vercel.com",
+            "GitHub, Inc. (service GitHub Pages)",
+            "88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis",
+            "Contact : https://support.github.com",
+            "Site : https://github.com",
           ],
         },
       ],
@@ -246,8 +246,8 @@ export const cgv: LegalDoc = {
           type: "list",
           items: [
             "le Client prend connaissance des présentes CGV et les accepte ;",
-            "il paie le prix via le lien de paiement sécurisé Stripe ;",
-            "après le paiement, il complète le formulaire de commande : nom, email, nom de l’application, ID du package Android, lien de test fermé s’il est déjà disponible, besoin d’accompagnement.",
+            "il complète le formulaire de commande : nom, email, nom de l’application, ID du package Android, lien de test fermé s’il est déjà disponible, besoin d’accompagnement ;",
+            "il paie le prix via un lien de paiement sécurisé Stripe, proposé sur le site ou envoyé par email. Selon le parcours, le formulaire peut être complété juste après le paiement.",
           ],
         },
         {
@@ -572,7 +572,7 @@ export const confidentialite: LegalDoc = {
         },
         {
           type: "p",
-          text: "Lors de la commande. Après le paiement, le formulaire de commande collecte :",
+          text: "Lors de la commande. Le formulaire de commande collecte :",
         },
         {
           type: "list",
@@ -632,8 +632,9 @@ export const confidentialite: LegalDoc = {
           type: "list",
           items: [
             "Stripe (Stripe Payments Europe, Limited, Irlande) : paiement en ligne. Stripe traite aussi certaines données pour son propre compte, notamment pour lutter contre la fraude et respecter ses obligations légales, selon sa politique de confidentialité (https://stripe.com/privacy).",
-            "Vercel Inc. (États-Unis) : hébergement du site.",
-            "Google LLC, service Gmail (États-Unis) : messagerie de l’éditeur, réception et gestion des commandes. Les données du formulaire y sont transmises par email ou, le cas échéant, via un outil d’automatisation (webhook) mentionné ici dès sa mise en place.",
+            "GitHub, Inc. (États-Unis), service GitHub Pages : hébergement du site.",
+            "Google LLC, service Gmail (États-Unis) : messagerie de l’éditeur, réception et gestion des commandes. Les données du formulaire y sont transmises par email.",
+            "FormSubmit (formsubmit.co) : service qui transmet le formulaire de commande par email à l’éditeur.",
             "Le fournisseur de messagerie électronique de l’éditeur : échanges par email.",
             "Les testeurs : uniquement le nom de l’application et le lien de test fermé, nécessaires à la prestation. Ils installent l’application depuis le Play Store et n’ont jamais accès à votre code source ni à votre Play Console. Comme tout utilisateur du Play Store, ils voient les informations publiques de la fiche de l’application, dont le nom du développeur.",
             "Les autorités administratives ou judiciaires, uniquement lorsque la loi l’exige.",
@@ -650,7 +651,7 @@ export const confidentialite: LegalDoc = {
       blocks: [
         {
           type: "p",
-          text: "Certains destinataires sont établis ou traitent des données hors de l’Union européenne, notamment aux États-Unis : Vercel Inc., Stripe pour certains traitements, et Google LLC (Gmail).",
+          text: "Certains destinataires sont établis ou traitent des données hors de l’Union européenne, notamment aux États-Unis : GitHub, Inc., Stripe pour certains traitements, FormSubmit et Google LLC (Gmail).",
         },
         {
           type: "p",

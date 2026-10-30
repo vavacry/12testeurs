@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useActionState, type InputHTMLAttributes } from "react";
+import { useActionState, useState, type InputHTMLAttributes } from "react";
 import { PixelArrow } from "@/components/ui";
-import { site } from "@/lib/site";
+import { hasStripe, site } from "@/lib/site";
 import { submitOrder, type OrderState } from "./order";
 
 const initialState: OrderState = { status: "idle" };
@@ -60,6 +60,35 @@ function Field({
   );
 }
 
+// Secours si l’envoi automatique échoue : copier le récapitulatif ou ouvrir la messagerie.
+function ManualSend({ summary }: { summary: string }) {
+  const [copied, setCopied] = useState(false);
+  const href = `mailto:${site.contactEmail}?subject=${encodeURIComponent("Commande 12testeurs")}&body=${encodeURIComponent(summary)}`;
+  return (
+    <div role="status" className="space-y-5 p-6 md:p-8">
+      <p className="text-lg text-paper">
+        L’envoi automatique n’a pas fonctionné. Copie ce récapitulatif et envoie-le à{" "}
+        <span className="font-semibold">{site.contactEmail}</span> : on lance ton test dès réception.
+      </p>
+      <pre className="overflow-x-auto border border-line-2 bg-ink p-4 font-mono text-[0.8125rem] whitespace-pre-wrap text-mute">
+        {summary}
+      </pre>
+      <div className="flex flex-col gap-4 sm:flex-row">
+        <button
+          type="button"
+          className="btn"
+          onClick={() => navigator.clipboard?.writeText(summary).then(() => setCopied(true), () => {})}
+        >
+          {copied ? "Copié ✓" : "Copier le récapitulatif"}
+        </button>
+        <a href={href} className="label self-center text-paper underline underline-offset-4">
+          Ouvrir ma messagerie
+        </a>
+      </div>
+    </div>
+  );
+}
+
 export function OrderForm() {
   const [state, formAction, pending] = useActionState(async (prev: OrderState, formData: FormData) => {
     // Le Payment Link Stripe redirige vers /commande?session_id=… : on le joint à la commande.
@@ -71,10 +100,12 @@ export function OrderForm() {
     return (
       <div role="status" className="space-y-3 p-6 font-mono text-sm leading-relaxed text-mute md:p-8">
         <p>
-          <span className="text-ok">[ OK ]</span> commande reçue
+          <span className="text-ok">[ OK ]</span> commande envoyée
         </p>
         <p>
-          <span className="text-ok">[ OK ]</span> on t’écrit très vite{state.email ? ` à ${state.email}` : ""}
+          <span className="text-ok">[ OK ]</span>{" "}
+          {hasStripe ? "on t’écrit très vite" : "on t’envoie le lien de paiement (39 €)"}
+          {state.email ? ` à ${state.email}` : ""}
         </p>
         <p>
           <span className="text-ok">[ OK ]</span> les 14 testeurs s’inscrivent sous 24–48 h après réception de ton lien
@@ -88,23 +119,7 @@ export function OrderForm() {
   }
 
   if (state.status === "email" && state.summary) {
-    const href = `mailto:${site.contactEmail}?subject=${encodeURIComponent("Commande 12testeurs")}&body=${encodeURIComponent(state.summary)}`;
-    return (
-      <div role="status" className="space-y-5 p-6 md:p-8">
-        <p className="font-mono text-sm text-mute">
-          <span className="text-ok">[ OK ]</span> infos prêtes
-        </p>
-        <p className="text-lg text-paper">Dernier clic : envoie-nous ce récapitulatif par email pour lancer ton test.</p>
-        <pre className="overflow-x-auto border border-line-2 bg-ink p-4 font-mono text-[0.8125rem] whitespace-pre-wrap text-mute">
-          {state.summary}
-        </pre>
-        <a href={href} className="btn">
-          Envoyer ma commande
-          <PixelArrow className="btn-arrow" />
-        </a>
-        <p className="text-sm text-mute">Ou copie le texte ci-dessus et envoie-le à {site.contactEmail}.</p>
-      </div>
-    );
+    return <ManualSend summary={state.summary} />;
   }
 
   const v = state.values ?? {};

@@ -1,4 +1,6 @@
 // Traitement de la commande dans le navigateur : le site est 100 % statique (aucun serveur).
+// L’envoi passe par FormSubmit (formsubmit.co), qui transfère le formulaire par email à l’éditeur.
+import { site } from "@/lib/site";
 
 type Field = "name" | "email" | "appName" | "packageId" | "testLink";
 
@@ -74,6 +76,31 @@ export async function submitOrder(_prev: OrderState, formData: FormData): Promis
     }).catch(() => {});
   }
 
-  // Le client envoie le récapitulatif par email : la commande arrive toujours dans ta boîte.
+  try {
+    const res = await fetch(`https://formsubmit.co/ajax/${site.contactEmail}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({
+        _subject: `Nouvelle commande 12testeurs : ${order.appName}`,
+        _template: "table",
+        _captcha: "false",
+        _replyto: order.email,
+        Nom: order.name,
+        Email: order.email,
+        App: order.appName,
+        "ID du package": order.packageId,
+        "Lien de test fermé": order.testLink || "à créer",
+        "Besoin d’aide": order.needHelp ? "oui" : "non",
+        "Démarrage immédiat (rétractation)": order.expressStart ? "oui" : "non",
+        "Session Stripe": order.stripeSessionId ?? "—",
+      }),
+    });
+    const data = (await res.json().catch(() => ({}))) as { success?: string | boolean };
+    if (res.ok && String(data.success) !== "false") return { status: "success", email: order.email };
+  } catch {
+    // réseau coupé ou service indisponible : on bascule sur l’envoi manuel ci-dessous
+  }
+
+  // Secours : le client copie le récapitulatif ou l’envoie depuis sa messagerie.
   return { status: "email", email: order.email, summary };
 }
