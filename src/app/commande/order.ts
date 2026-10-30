@@ -1,4 +1,4 @@
-"use server";
+// Traitement de la commande dans le navigateur : le site est 100 % statique (aucun serveur).
 
 type Field = "name" | "email" | "appName" | "packageId" | "testLink";
 
@@ -63,29 +63,17 @@ export async function submitOrder(_prev: OrderState, formData: FormData): Promis
     `• Session Stripe : ${order.stripeSessionId ?? "—"}`,
   ].join("\n");
 
-  const webhook = process.env.ORDER_WEBHOOK_URL;
-  if (!webhook) {
-    if (process.env.NODE_ENV !== "production") {
-      console.info("[commande] ORDER_WEBHOOK_URL absent : commande affichée ici seulement.\n" + summary);
-      return { status: "success", email: order.email };
-    }
-    // Pas encore d’outil branché : le client envoie lui-même le récapitulatif par email.
-    return { status: "email", email: order.email, summary };
-  }
-
-  try {
-    const res = await fetch(webhook, {
+  // Optionnel : copie automatique vers un webhook (Make, Zapier, n8n…), sans attendre la réponse.
+  const webhook = process.env.NEXT_PUBLIC_ORDER_WEBHOOK_URL;
+  if (webhook) {
+    fetch(webhook, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      // content : Discord · text : Slack · order : Make, Zapier, n8n…
-      body: JSON.stringify({ content: summary, text: summary, allowed_mentions: { parse: [] }, order }),
-      signal: AbortSignal.timeout(8000),
-    });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  } catch (err) {
-    console.error("[commande] échec de l’envoi au webhook", err, "\n" + summary);
-    return { status: "error", message: "Envoi impossible pour le moment. Réessaie dans une minute.", values };
+      mode: "no-cors",
+      headers: { "Content-Type": "text/plain" },
+      body: JSON.stringify({ content: summary, text: summary, order }),
+    }).catch(() => {});
   }
 
-  return { status: "success", email: order.email };
+  // Le client envoie le récapitulatif par email : la commande arrive toujours dans ta boîte.
+  return { status: "email", email: order.email, summary };
 }

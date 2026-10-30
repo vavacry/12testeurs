@@ -30,7 +30,8 @@ const mono = localFont({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(site.url),
+  // Origine seule : Next ajoute lui-même le basePath aux images (sinon /12testeurs/12testeurs/…).
+  metadataBase: new URL(new URL(site.url).origin),
   title: {
     default: site.title,
     template: `%s · ${site.name}`,
@@ -46,11 +47,11 @@ export const metadata: Metadata = {
     "trouver 12 testeurs",
     "closed testing Google Play",
   ],
-  alternates: { canonical: "/" },
+  alternates: { canonical: `${site.url}/` },
   openGraph: {
     type: "website",
     locale: "fr_FR",
-    url: "/",
+    url: `${site.url}/`,
     siteName: site.name,
     title: site.title,
     description: site.description,

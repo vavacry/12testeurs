@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { checkoutHref, site } from "@/lib/site";
+import { checkoutHref, paymentNote, site } from "@/lib/site";
 
 export function Logo() {
   return (
@@ -28,7 +28,7 @@ export function PixelArrow({ className = "" }: { className?: string }) {
   );
 }
 
-// Un seul objectif, un seul libellé partout : le paiement Stripe.
+// Un seul objectif, un seul libellé partout : la commande.
 export function CtaButton({ id, className = "" }: { id?: string; className?: string }) {
   return (
     <a id={id} href={checkoutHref} className={`btn ${className}`}>
@@ -45,7 +45,7 @@ export function CtaBlock() {
   return (
     <div data-cta-zone className="mt-10 flex flex-col gap-4 border-t border-line pt-8 sm:flex-row sm:items-center sm:gap-6">
       <CtaButton />
-      <p className="label text-mute">Paiement Stripe · sans abonnement · remboursé si accès refusé</p>
+      <p className="label text-mute">{paymentNote} · sans abonnement · remboursé si accès refusé</p>
     </div>
   );
 }

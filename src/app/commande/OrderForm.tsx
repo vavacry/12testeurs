@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useActionState, type InputHTMLAttributes } from "react";
 import { PixelArrow } from "@/components/ui";
 import { site } from "@/lib/site";
-import { submitOrder, type OrderState } from "./actions";
+import { submitOrder, type OrderState } from "./order";
 
 const initialState: OrderState = { status: "idle" };
 

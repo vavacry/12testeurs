@@ -18,4 +18,6 @@ const orderByEmail =
   `mailto:${site.contactEmail}?subject=${encodeURIComponent("Commande 12testeurs · test fermé 39 €")}&body=${encodeURIComponent(
     "Bonjour,\n\nJe veux lancer un test fermé avec 14 testeurs (39 €).\n\nNom de l’app :\nID du package (com.xxx.xxx) :\nLien du test fermé (si déjà créé) :\n\nMerci !",
   )}`;
+export const hasStripe = Boolean(process.env.NEXT_PUBLIC_STRIPE_LINK);
 export const checkoutHref = process.env.NEXT_PUBLIC_STRIPE_LINK || orderByEmail;
+export const paymentNote = hasStripe ? "Paiement sécurisé Stripe" : "Commande par email";

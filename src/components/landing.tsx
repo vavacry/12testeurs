@@ -5,7 +5,7 @@ import { proof } from "@/content/proof";
 import { PlayOnView } from "@/components/PlayOnView";
 import { Tabs } from "@/components/Tabs";
 import { CtaBlock, CtaButton, Logo, withSlots } from "@/components/ui";
-import { checkoutHref, site } from "@/lib/site";
+import { checkoutHref, paymentNote, site } from "@/lib/site";
 
 const v = (vars: Record<string, string | number>) => vars as CSSProperties;
 
@@ -60,7 +60,7 @@ export function Hero() {
             </p>
             <div className="hero-in mt-8" style={v({ "--d": "0.2s" })}>
               <CtaButton id="hero-cta" />
-              <p className="label mt-5 text-mute">Paiement Stripe · sans abonnement · service français</p>
+              <p className="label mt-5 text-mute">{paymentNote} · sans abonnement · service français</p>
               {proof.enabled ? <p className="label mt-3 text-paper">{withSlots(proof.stat)}</p> : null}
             </div>
           </div>
@@ -166,7 +166,7 @@ const publishedFaq = faq.filter((item) => !item.a.includes("{{"));
 const h2 = "display text-[clamp(2.1rem,4.6vw,3.4rem)]";
 
 const steps = [
-  ["Tu paies 39 €", "sur Stripe, sans créer de compte."],
+  ["Tu commandes pour 39 €", "en quelques minutes, sans créer de compte."],
   ["Tu nous envoies ton lien", "de test fermé et l’ID de ton app. Pas encore de test fermé ? On le crée avec toi."],
   ["14 testeurs s’inscrivent sous 24 à 48 h", "et ouvrent ton app pendant 14 jours. Tu vois le nombre d’inscrits chaque jour."],
   ["À la fin des 14 jours,", "tu reçois le résumé QA et on t’aide à remplir la demande d’accès production."],
@@ -269,7 +269,7 @@ function GuaranteePanel() {
             {[
               "Tu nous envoies l’email de refus de Google, ou une capture.",
               "On vérifie que le test a bien été mené jusqu’au bout avec nos testeurs.",
-              `On te rembourse les 39 € via Stripe, sur ta carte, sous ${site.refundDelay}.`,
+              `On te rembourse les 39 € sur ton moyen de paiement, sous ${site.refundDelay}.`,
             ].map((step, i) => (
               <li key={i} className="flex gap-4">
                 <span className="label grid h-8 w-8 shrink-0 place-items-center border border-line-2 text-blue-text">

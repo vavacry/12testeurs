@@ -22,7 +22,7 @@ export const mentionsLegales: LegalDoc = {
     "Mentions légales de 12testeurs : éditeur, directeur de la publication, hébergeur, propriété intellectuelle et absence d’affiliation à Google.",
   updatedAt: "29 octobre 2026",
   intro:
-    "Conformément à la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l’économie numérique (LCEN), voici les informations relatives au site https://12testeurs.fr.",
+    "Conformément à la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l’économie numérique (LCEN), voici les informations relatives au site 12testeurs.",
   sections: [
     {
       title: "Éditeur du site",
@@ -129,7 +129,7 @@ export const cgv: LegalDoc = {
     "CGV de 12testeurs : test fermé Google Play avec 14 testeurs réels, 39 € TTC, droit de rétractation et remboursement si Google refuse l’accès production.",
   updatedAt: "29 octobre 2026",
   intro:
-    "Les présentes conditions générales de vente (CGV) s’appliquent à toute commande passée sur le site https://12testeurs.fr. Elles sont accessibles à tout moment sur le site. Le Client les accepte avant tout paiement.",
+    "Les présentes conditions générales de vente (CGV) s’appliquent à toute commande passée sur le site 12testeurs. Elles sont accessibles à tout moment sur le site. Le Client les accepte avant tout paiement.",
   sections: [
     {
       title: "Article 1 – Vendeur",
@@ -548,7 +548,7 @@ export const confidentialite: LegalDoc = {
     "Politique de confidentialité de 12testeurs : données collectées, finalités, destinataires, durées de conservation et vos droits RGPD.",
   updatedAt: "29 octobre 2026",
   intro:
-    "Cette politique explique comment vos données personnelles sont traitées lorsque vous consultez le site https://12testeurs.fr et commandez la prestation 12testeurs, conformément au Règlement général sur la protection des données (RGPD) et à la loi Informatique et Libertés.",
+    "Cette politique explique comment vos données personnelles sont traitées lorsque vous consultez le site 12testeurs et commandez la prestation 12testeurs, conformément au Règlement général sur la protection des données (RGPD) et à la loi Informatique et Libertés.",
   sections: [
     {
       title: "Responsable du traitement",
@@ -650,7 +650,7 @@ export const confidentialite: LegalDoc = {
       blocks: [
         {
           type: "p",
-          text: "Certains destinataires sont établis ou traitent des données hors de l’Union européenne, notamment aux États-Unis : Vercel Inc., Stripe pour certains traitements et, Google LLC (Gmail).",
+          text: "Certains destinataires sont établis ou traitent des données hors de l’Union européenne, notamment aux États-Unis : Vercel Inc., Stripe pour certains traitements, et Google LLC (Gmail).",
         },
         {
           type: "p",
