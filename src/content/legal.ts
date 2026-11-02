@@ -717,7 +717,7 @@ export const confidentialite: LegalDoc = {
           ? [
               {
                 type: "p" as const,
-                text: "Le site mesure sa fréquentation avec GoatCounter, pour le compte exclusif de l’éditeur et sur la base de son intérêt légitime à comprendre l’usage du site : pages vues, provenance, pays, navigateur et taille d’écran, clics sur le bouton de commande et envoi du formulaire. Rien n’est enregistré sur votre appareil, l’adresse IP n’est pas conservée et aucun suivi n’est fait entre sites.",
+                text: "Le site mesure sa fréquentation avec GoatCounter, pour le compte exclusif de l’éditeur et sur la base de son intérêt légitime à comprendre l’usage du site : pages vues, provenance, pays, navigateur et taille d’écran, clics sur le bouton de commande, envoi du formulaire et copie d’un brouillon dans l’outil gratuit, sans le texte saisi. Rien n’est enregistré sur votre appareil, l’adresse IP n’est pas conservée et aucun suivi n’est fait entre sites.",
               },
             ]
           : []),

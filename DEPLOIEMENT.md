@@ -83,7 +83,7 @@ La mesure utilise GoatCounter : pas de cookie, gratuit pour un petit site profes
 2. Ajoute dans GitHub la variable `GOATCOUNTER_CODE` avec ce code, puis relance le workflow.
 3. Pour suivre un canal, ajoute `?utm_source=reddit` au lien que tu partages.
 
-Événements enregistrés : `clic-commande-…` (page du clic) et `commande-envoyee`.
+Événements enregistrés : `clic-commande-…` (page du clic), `commande-envoyee` et `outil-copie-…` (brouillon copié dans le générateur, jamais son texte).
 
 Pour publier un article, ajoute une entrée dans `src/content/articles.ts` : la page, la liste du blog et le sitemap se mettent à jour au prochain push.
 

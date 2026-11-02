@@ -379,6 +379,11 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/outils/questionnaire-acces-production" className="hover:text-paper">
+                  Outil gratuit
+                </Link>
+              </li>
+              <li>
                 <Link href="/mentions-legales" className="hover:text-paper">
                   Mentions légales
                 </Link>

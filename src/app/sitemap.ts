@@ -14,6 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly" as const,
       priority: 0.7,
     })),
+    { url: `${site.url}/outils/questionnaire-acces-production`, changeFrequency: "monthly", priority: 0.8 },
     { url: `${site.url}/cgv`, changeFrequency: "yearly", priority: 0.3 },
     { url: `${site.url}/mentions-legales`, changeFrequency: "yearly", priority: 0.2 },
     { url: `${site.url}/confidentialite`, changeFrequency: "yearly", priority: 0.2 },

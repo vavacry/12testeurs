@@ -33,7 +33,7 @@ export const articles: Article[] = [
     intro: [
       "Ton test fermé est terminé, et Google te demande maintenant de remplir un questionnaire avant d’ouvrir la production. Il n’y a rien de piégeux dedans, mais les réponses vagues n’aident pas : Google veut comprendre comment ton test s’est passé et ce que tu en as tiré.",
       "Voici les sujets que liste la [page d’aide de Google](https://support.google.com/googleplay/android-developer/answer/14151465?hl=fr), avec une façon d’y répondre. Le texte exact peut changer : fie-toi à ce que tu vois dans ta Play Console.",
-      "Les exemples ci-dessous sont inventés. Remplace-les par ce qui s’est vraiment passé.",
+      "Les exemples ci-dessous sont inventés. Remplace-les par ce qui s’est vraiment passé. Pour mettre tes propres réponses en forme, utilise notre [générateur gratuit](/outils/questionnaire-acces-production).",
     ],
     sections: [
       {

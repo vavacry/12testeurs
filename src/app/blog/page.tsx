@@ -34,6 +34,13 @@ export default function BlogPage() {
           <p className="label text-mute">Blog · test fermé Google Play</p>
           <h1 className="display mt-6 text-[clamp(2.75rem,7vw,5.5rem)]">Les guides</h1>
           <p className="mt-6 max-w-[56ch] text-lg text-mute">{description}</p>
+          <p className="mt-6 max-w-[56ch] text-mute">
+            Tu prépares ta demande ?{" "}
+            <Link href="/outils/questionnaire-acces-production" className="text-paper underline underline-offset-4">
+              Utilise notre générateur gratuit de réponses
+            </Link>
+            .
+          </p>
           <ul className="mt-12 border-t border-line">
             {articles.map((article) => (
               <li key={article.slug} className="border-b border-line">
