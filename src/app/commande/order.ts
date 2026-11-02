@@ -1,5 +1,6 @@
 // Traitement de la commande dans le navigateur : le site est 100 % statique (aucun serveur).
 // L’envoi passe par Web3Forms ou FormSubmit, qui transfèrent le formulaire par email à l’éditeur.
+import { trackEvent } from "@/lib/analytics";
 import { site } from "@/lib/site";
 
 type Field = "name" | "email" | "appName" | "packageId" | "testLink";
@@ -104,7 +105,10 @@ export async function submitOrder(_prev: OrderState, formData: FormData): Promis
       }),
   ];
   for (const trySend of senders) {
-    if (await trySend()) return { status: "success", email: order.email };
+    if (await trySend()) {
+      trackEvent("commande-envoyee");
+      return { status: "success", email: order.email };
+    }
   }
 
   // Secours : le client copie le récapitulatif ou l’envoie depuis sa messagerie.

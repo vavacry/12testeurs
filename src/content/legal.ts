@@ -1,3 +1,6 @@
+// Le texte suit la réalité du site : la mesure d’audience n’existe que si GOATCOUNTER_CODE est défini.
+const hasAudience = Boolean(process.env.NEXT_PUBLIC_GOATCOUNTER_CODE);
+
 export type LegalBlock =
   | { type: "p"; text: string }
   | { type: "list"; items: string[] };
@@ -112,7 +115,9 @@ export const mentionsLegales: LegalDoc = {
       blocks: [
         {
           type: "p",
-          text: "Le traitement de vos données personnelles est décrit dans la politique de confidentialité. Le site n’utilise aucun cookie non essentiel ni aucun outil de mesure d’audience.",
+          text: hasAudience
+            ? "Le traitement de vos données personnelles est décrit dans la politique de confidentialité. Le site n’utilise aucun cookie non essentiel. Sa mesure d’audience fonctionne sans cookie."
+            : "Le traitement de vos données personnelles est décrit dans la politique de confidentialité. Le site n’utilise aucun cookie non essentiel ni aucun outil de mesure d’audience.",
         },
       ],
     },
@@ -534,7 +539,7 @@ export const confidentialite: LegalDoc = {
   title: "Politique de confidentialité",
   metaDescription:
     "Politique de confidentialité de 12testeurs : données collectées, finalités, destinataires, durées de conservation et vos droits RGPD.",
-  updatedAt: "29 octobre 2026",
+  updatedAt: "2 novembre 2026",
   intro:
     "Cette politique explique comment vos données personnelles sont traitées lorsque vous consultez le site 12testeurs et commandez la prestation 12testeurs, conformément au Règlement général sur la protection des données (RGPD) et à la loi Informatique et Libertés.",
   sections: [
@@ -623,6 +628,7 @@ export const confidentialite: LegalDoc = {
             "GitHub, Inc. (États-Unis), service GitHub Pages : hébergement du site.",
             "Google LLC, service Gmail (États-Unis) : messagerie de l’éditeur, réception et gestion des commandes. Les données du formulaire y sont transmises par email.",
             "Web3Forms (web3forms.com) ou FormSubmit (formsubmit.co) : services qui transmettent le formulaire de commande par email à l’éditeur.",
+            ...(hasAudience ? ["GoatCounter (exploité depuis l’Irlande, hébergé en Finlande et en Allemagne) : mesure d’audience."] : []),
             "Le fournisseur de messagerie électronique de l’éditeur : échanges par email.",
             "Les testeurs : uniquement le nom de l’application et le lien de test fermé, nécessaires à la prestation. Ils installent l’application depuis le Play Store et n’ont jamais accès à votre code source ni à votre Play Console. Comme tout utilisateur du Play Store, ils voient les informations publiques de la fiche de l’application, dont le nom du développeur.",
             "Les autorités administratives ou judiciaires, uniquement lorsque la loi l’exige.",
@@ -703,8 +709,18 @@ export const confidentialite: LegalDoc = {
       blocks: [
         {
           type: "p",
-          text: "Le site n’utilise aucun cookie non essentiel et aucun outil de mesure d’audience. Aucun consentement n’est donc demandé.",
+          text: hasAudience
+            ? "Le site n’utilise aucun cookie non essentiel. Aucun consentement n’est donc demandé pour les cookies."
+            : "Le site n’utilise aucun cookie non essentiel et aucun outil de mesure d’audience. Aucun consentement n’est donc demandé.",
         },
+        ...(hasAudience
+          ? [
+              {
+                type: "p" as const,
+                text: "Le site mesure sa fréquentation avec GoatCounter, pour le compte exclusif de l’éditeur et sur la base de son intérêt légitime à comprendre l’usage du site : pages vues, provenance, pays, navigateur et taille d’écran, clics sur le bouton de commande et envoi du formulaire. Rien n’est enregistré sur votre appareil, l’adresse IP n’est pas conservée et aucun suivi n’est fait entre sites.",
+              },
+            ]
+          : []),
         {
           type: "p",
           text: "La page de paiement est hébergée par Stripe, sur son propre domaine. Stripe peut y utiliser des cookies nécessaires au paiement et à la prévention de la fraude, selon sa propre politique.",

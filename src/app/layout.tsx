@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
+import { Analytics } from "@/components/Analytics";
 import { site } from "@/lib/site";
 import "./globals.css";
 
@@ -81,6 +82,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           Aller au contenu
         </a>
         {children}
+        <Analytics />
       </body>
     </html>
   );

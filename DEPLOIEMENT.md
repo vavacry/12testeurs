@@ -38,7 +38,7 @@ Le site s'ouvre sur http://localhost:3000. En local, `NEXT_PUBLIC_BASE_PATH` res
 
 ## 3. Brancher le paiement Stripe
 
-Tant qu'aucun lien Stripe n'est configuré, les boutons « Lancer mon test fermé » ouvrent un **email de commande pré-rempli** vers vacryoff@gmail.com, et la page affiche « Commande par email ».
+Tant qu'aucun lien Stripe n'est configuré, les boutons « Lancer mon test fermé » ouvrent le formulaire `/commande`, et le lien de paiement part ensuite par email.
 
 1. Stripe, en **mode test** d'abord : **Catalogue de produits → Ajouter un produit** « Test fermé Google Play · 14 testeurs », **39,00 €**, paiement unique.
 2. **Paramètres → Informations publiques** : URL des CGV `https://vavacry.github.io/12testeurs/cgv`.
@@ -75,13 +75,25 @@ Crée ensuite la variable `ORDER_WEBHOOK_URL` comme à l'étape 3. Cette URL est
 3. Dans `.github/workflows/pages.yml`, mets `NEXT_PUBLIC_BASE_PATH: ""` et `NEXT_PUBLIC_SITE_URL: https://12testeurs.fr`, puis push.
 4. Mets à jour l'URL des CGV et la redirection Stripe avec le nouveau domaine.
 
-## 6. Avant d'ouvrir les ventes
+## 6. Mesure d'audience et blog
+
+La mesure utilise GoatCounter : pas de cookie, gratuit pour un petit site professionnel.
+
+1. Crée un compte sur https://www.goatcounter.com. Le code est le début de ton adresse, par exemple `12testeurs` pour `12testeurs.goatcounter.com`.
+2. Ajoute dans GitHub la variable `GOATCOUNTER_CODE` avec ce code, puis relance le workflow.
+3. Pour suivre un canal, ajoute `?utm_source=reddit` au lien que tu partages.
+
+Événements enregistrés : `clic-commande-…` (page du clic) et `commande-envoyee`.
+
+Pour publier un article, ajoute une entrée dans `src/content/articles.ts` : la page, la liste du blog et le sitemap se mettent à jour au prochain push.
+
+## 7. Avant d'ouvrir les ventes
 
 - [ ] Textes légaux relus : ce sont des modèles rédigés par un agent IA, pas un avis juridique.
 - [ ] Lien Stripe branché et achat de test complet : paiement → `/commande` → email reçu.
 - [ ] Google Search Console : propriété ajoutée, sitemap `…/sitemap.xml` envoyé.
 
-## 7. Performance (Lighthouse 12, site en ligne, 30/10/2026)
+## 8. Performance (Lighthouse 12, site en ligne, 30/10/2026)
 
 | | Performance | Accessibilité | Bonnes pratiques | SEO |
 |---|---|---|---|---|

@@ -31,7 +31,7 @@ export function PixelArrow({ className = "" }: { className?: string }) {
 // Un seul objectif, un seul libellé partout : la commande.
 export function CtaButton({ id, className = "" }: { id?: string; className?: string }) {
   return (
-    <a id={id} href={checkoutHref} className={`btn ${className}`}>
+    <a id={id} href={checkoutHref} data-cta className={`btn ${className}`}>
       <span>Lancer mon test fermé</span>
       <span aria-hidden="true" className="h-4 w-px bg-current opacity-40" />
       <span>{site.price} €</span>

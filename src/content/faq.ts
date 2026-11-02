@@ -29,7 +29,7 @@ export const faq: FaqItem[] = [
   },
   {
     q: "Pourquoi pas mes amis ou un échange sur Reddit ?",
-    a: "Ça peut marcher. Le risque, c’est qu’une seule personne désinstalle l’app en cours de route : avec 12 inscrits pile, ton compteur repart de zéro, et personne ne te fait de rapport de bugs.",
+    a: "Ça peut marcher. Le risque, c’est qu’une seule personne désinstalle l’app en cours de route : avec 12 inscrits pile, tu passes sous le minimum et son remplaçant doit faire ses 14 jours complets. Et personne ne te fait de rapport de bugs.",
   },
   {
     q: "Mes données et mon code sont-ils en sécurité ?",

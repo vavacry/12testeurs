@@ -152,7 +152,7 @@ function DropoutSchema() {
             jusqu’au bout.
           </p>
           <p className="mt-3 text-sm text-mute">
-            Avec 12 testeurs pile, ce même départ aurait remis ton compteur à zéro. C’est pour ça qu’on en met 14.
+            Avec 12 testeurs pile, ce même départ te ferait passer sous le minimum, et son remplaçant devrait faire ses 14 jours complets. C’est pour ça qu’on en met 14.
           </p>
         </div>
       </figure>
@@ -371,8 +371,13 @@ export function Footer() {
               {site.owner} ({site.company}), EI · {site.contactEmail}
             </p>
           </div>
-          <nav aria-label="Informations légales" className="md:col-span-3">
+          <nav aria-label="Pages du site" className="md:col-span-3">
             <ul className="label space-y-3 text-mute">
+              <li>
+                <Link href="/blog" className="hover:text-paper">
+                  Blog
+                </Link>
+              </li>
               <li>
                 <Link href="/mentions-legales" className="hover:text-paper">
                   Mentions légales

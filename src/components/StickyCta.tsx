@@ -49,7 +49,7 @@ export function StickyCta() {
           <br />
           Remboursé si accès refusé
         </p>
-        <a href={checkoutHref} className="btn btn-sm">
+        <a href={checkoutHref} data-cta className="btn btn-sm">
           Lancer mon test
           <PixelArrow className="btn-arrow" />
         </a>

@@ -21,7 +21,8 @@ Nom (Mathieu Dunand), nom commercial (Vascent), email (vacryoff@gmail.com), SIRE
 
 | Variable | Rôle |
 |---|---|
-| `STRIPE_LINK` | Lien Stripe Payment Link. Sans lui, les boutons ouvrent un email de commande pré-rempli |
+| `STRIPE_LINK` | Lien Stripe Payment Link. Sans lui, les boutons ouvrent le formulaire `/commande` et le lien de paiement part par email |
+| `GOATCOUNTER_CODE` | Code du compte GoatCounter. Sans lui, aucune mesure d’audience n’est chargée |
 | `ORDER_WEBHOOK_URL` | Optionnel : copie des commandes vers un webhook (voir DEPLOIEMENT.md) |
 
 ---
@@ -53,7 +54,7 @@ Logo + bouton « Lancer mon test · 39 € » (desktop uniquement).
 - « Compte environ 3 semaines au total, examen de Google compris. »
 - **Schéma « Et si un testeur abandonne ? »** (badge « Exemple ») : 14 cases, dont 2 de marge, avec le repère « Minimum Google : 12 ». Au jour 9, une case de marge devient grise et le compteur passe de 14 à 13. Les jours avancent jusqu'à J14, puis « ✓ 14 jours validés avec 13 inscrits ». Sous le schéma :
   - « Jour 9 : un testeur se désinscrit. Il en reste 13, toujours au-dessus des 12 exigés. Ton test continue jusqu'au bout. »
-  - « Avec 12 testeurs pile, ce même départ aurait remis ton compteur à zéro. C'est pour ça qu'on en met 14. »
+  - « Avec 12 testeurs pile, ce même départ te ferait passer sous le minimum, et son remplaçant devrait faire ses 14 jours complets. C'est pour ça qu'on en met 14. »
 
 ### Onglet 2 · Inclus
 - **H2** : « Ce que tu reçois pour 39 € » — 39 € · « Par app · paiement unique · TTC »
